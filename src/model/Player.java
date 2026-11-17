@@ -8,7 +8,7 @@ public class Player {
 	int score;
 	int rotationflipLeft;
 	
-	public Player() {
+	public Player(String name, PlayerColour color) {
 		
 	}
 	
