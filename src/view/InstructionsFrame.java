@@ -16,7 +16,7 @@ public class InstructionsFrame extends Frame{
 	//fields and objects
 	private JLabel titleLabel = new JLabel("Instructions");
 	
-	private File instructions = new File("instructions.txt");
+	private File instructions = new File("text/instructions.txt");
 	private JTextArea instructionsText = new JTextArea();
 	
 	private JScrollPane instructionsScroll = new JScrollPane(instructionsText);
