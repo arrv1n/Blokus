@@ -10,7 +10,7 @@ import javax.swing.*;
 //It features buttons to start the game, load a saved game, or 
 //view the instructions
 
-public class TitleFrame extends Frame implements ActionListener{
+public class TitleFrame extends Frame{
 	
 	//instance variables
 	//buttons
@@ -51,8 +51,6 @@ public class TitleFrame extends Frame implements ActionListener{
 		buttons[1].setBackground(Color.decode("#69ab54"));
 		buttons[2].setBackground(Color.decode("#c20d04"));
 		
-		buttons[2].addActionListener(this);
-		
 		int yPosition = 300; //Used to set bounds for buttons
 		
 		//Set the font and bounds of each button and add to frame
@@ -82,16 +80,6 @@ public class TitleFrame extends Frame implements ActionListener{
 
 	public void setLogoLabel(JLabel logoLabel) {
 		this.logoLabel = logoLabel;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == buttons[2]) {
-			setVisible(false);
-			InstructionsFrame i = new InstructionsFrame();
-			
-		}
-		
 	}
 	
 }

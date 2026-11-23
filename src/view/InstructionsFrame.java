@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,18 +21,20 @@ public class InstructionsFrame extends Frame{
 	
 	private JScrollPane instructionsScroll = new JScrollPane(instructionsText);
 	
+	private Font titleFont = new Font("Arial", Font.BOLD, 25);
+	private Font textAreaFont = new Font("Arial", Font.BOLD, 20);
+	
 	//constructor
 	public InstructionsFrame(ActionListener listener) {
 		super(listener);
+		super.setUpDesignLabels();
 		setUpInstructionsFrame();
 		
 	}
 	
 	private void setUpInstructionsFrame() {
-		//Label
-		titleLabel.setBounds(500, 50, 200, 100);
-		add(titleLabel);
-		
+		//set up label
+		setUpLabels();		
 		setUpInstructionsText();
 		
 		setTitle("Blokus - Instructions");
@@ -40,10 +42,22 @@ public class InstructionsFrame extends Frame{
 		
 	}
 
+	private void setUpLabels() {
+		titleLabel.setOpaque(true);
+		titleLabel.setBackground(Color.decode("#c20d04"));
+		titleLabel.setForeground(Color.WHITE);
+		titleLabel.setFont(titleFont);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setBounds(380, 50, 400, 50);
+		add(titleLabel);
+		
+	}
+
 	private void setUpInstructionsText() {
 		//Instructions text area
 		instructionsText.setEditable(false);
-		instructionsText.setOpaque(false);
+		instructionsText.setBackground(Color.decode("#cadde8"));
+		instructionsText.setFont(textAreaFont);
 		
 		//read text file and display the instructions on the text area
 		displayInstructions();

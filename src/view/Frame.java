@@ -43,7 +43,7 @@ public abstract class Frame extends JFrame{
 
 	private void createGUIObjects(ActionListener listener) {
 		createMenuBar(listener);
-		createButtons();
+		createButtons(listener);
 		
 	}
 
@@ -56,23 +56,24 @@ public abstract class Frame extends JFrame{
 		instructionsMenuItem.setBackground(Color.decode("#f7e599"));
 		menuBar.setBackground(Color.decode("#f7e599"));
 		
+		//add actionlistener to menu item
+		homeMenuItem.addActionListener(listener);
+		instructionsMenuItem.addActionListener(listener);
+		
 		//add menu items to menu bar
 		menuBar.add(homeMenuItem);
 		menuBar.add(instructionsMenuItem);
 		menuBar.add(settingsMenu);
-		
-		//add actionlistener to menu item
-		homeMenuItem.addActionListener(listener);
-		instructionsMenuItem.addActionListener(listener);
 		
 		//add menubar to frame
 		add(menuBar);
 		
 	}
 
-	private void createButtons() {
+	private void createButtons(ActionListener listener) {
 		soundButton.setBackground(Color.decode("#f7e599"));
 		soundButton.setBounds(1134, 0, 50, 50);
+		soundButton.addActionListener(listener);
 		add(soundButton);
 		
 	}
