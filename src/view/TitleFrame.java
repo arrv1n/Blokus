@@ -1,5 +1,7 @@
 package view;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
@@ -8,7 +10,7 @@ import javax.swing.*;
 //It features buttons to start the game, load a saved game, or 
 //view the instructions
 
-public class TitleFrame extends Frame{
+public class TitleFrame extends Frame implements ActionListener{
 	
 	//instance variables
 	//buttons
@@ -18,65 +20,50 @@ public class TitleFrame extends Frame{
 								 new JButton("Instructions")};
 	
 	private ImageIcon logoImage = new ImageIcon("images/blokusLogo.png");
-	private ImageIcon[] blokusDesignImages = {new ImageIcon("images/design1.png"),
-											  new ImageIcon("images/design2.png"),
-											  new ImageIcon("images/design3.png"),
-											  new ImageIcon("images/design4.png")};
 	
 	private JLabel logoLabel = new JLabel(logoImage);
-	private ArrayList<JLabel> blokusDesignLabels = new ArrayList<JLabel>();
+	
+	private Font buttonFont = new Font("Arial", Font.BOLD, 25);
 	
 	//Constructor
 	public TitleFrame(ActionListener listener) {
 		super(listener);
+		super.setUpDesignLabels();
 		setUpTitleFrame(listener);
 		
 	}
 
 	private void setUpTitleFrame(ActionListener listener) {
+		//create label for logo
+		logoLabel.setBounds(285, 50, 600, 250);
+		add(logoLabel);
 		//create the buttons
 		setUpButtons(listener);
-		//create labels for design
-		setUpLabels();
 		
 		setTitle("Blokus");
-		getContentPane().setBackground(Color.decode("#cadde8"));
 		setVisible(true);
 		
 	}
 
 	private void setUpButtons(ActionListener listener) {
+		//set the background of each button
+		buttons[0].setBackground(Color.decode("#0865bd"));
+		buttons[1].setBackground(Color.decode("#69ab54"));
+		buttons[2].setBackground(Color.decode("#c20d04"));
+		
+		buttons[2].addActionListener(this);
+		
 		int yPosition = 300; //Used to set bounds for buttons
 		
-		//Set the bounds of each button and add to frame
+		//Set the font and bounds of each button and add to frame
 		for (JButton currentButton: buttons) {
+			currentButton.setForeground(Color.WHITE);
+			currentButton.setFont(buttonFont);
 			currentButton.setBounds(375, yPosition, 400, 50);
 			currentButton.addActionListener(listener);
 			add(currentButton);
 			//increase y position for next button
 			yPosition += 75;
-		}
-		
-	}
-
-	private void setUpLabels() {
-		logoLabel.setBounds(285, 50, 600, 250);
-		add(logoLabel);
-		
-		//add labels with images to the arraylist
-		for (ImageIcon image: blokusDesignImages) {
-			blokusDesignLabels.add(new JLabel(image));
-		}
-		
-		//set bounds for each label
-		blokusDesignLabels.get(0).setBounds(0, 25, 227, 222);
-		blokusDesignLabels.get(1).setBounds(0, 303, 205, 257);
-		blokusDesignLabels.get(2).setBounds(1077, 25, 123, 287);
-		blokusDesignLabels.get(3).setBounds(893, 213, 287, 347);
-		
-		//add labels to frame
-		for (JLabel label: blokusDesignLabels) {
-			add(label);
 		}
 		
 	}
@@ -97,12 +84,14 @@ public class TitleFrame extends Frame{
 		this.logoLabel = logoLabel;
 	}
 
-	public ArrayList<JLabel> getBlokusDesignLabels() {
-		return blokusDesignLabels;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == buttons[2]) {
+			setVisible(false);
+			InstructionsFrame i = new InstructionsFrame();
+			
+		}
+		
 	}
-
-	public void setBlokusDesignLabels(ArrayList<JLabel> blokusDesignLabels) {
-		this.blokusDesignLabels = blokusDesignLabels;
-	}
-
+	
 }

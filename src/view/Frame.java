@@ -3,7 +3,10 @@ package view;
 import java.awt.Color;
 import java.awt.MenuBar;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 //This is an abstract class that will be used to create all other
@@ -24,6 +27,13 @@ public abstract class Frame extends JFrame{
 	
 	private JButton soundButton = new JButton(speakerImage);
 	
+	private ImageIcon[] blokusDesignImages = {new ImageIcon("images/design1.png"),
+			  								  new ImageIcon("images/design2.png"),
+			  								  new ImageIcon("images/design3.png"),
+			  								  new ImageIcon("images/design4.png")};
+	
+	private ArrayList<JLabel> blokusDesignLabels = new ArrayList<JLabel>();
+	
 	//constructor
 	public Frame(ActionListener listener) {
 		createGUIObjects(listener);
@@ -42,19 +52,18 @@ public abstract class Frame extends JFrame{
 		menuBar.setBounds(0, 0, 1134, 25);
 		
 		//set background colours of menu items
-		homeMenuItem.setBackground(Color.ORANGE);
-		instructionsMenuItem.setBackground(Color.ORANGE);
-		menuBar.setBackground(Color.ORANGE);
+		homeMenuItem.setBackground(Color.decode("#f7e599"));
+		instructionsMenuItem.setBackground(Color.decode("#f7e599"));
+		menuBar.setBackground(Color.decode("#f7e599"));
 		
 		//add menu items to menu bar
 		menuBar.add(homeMenuItem);
 		menuBar.add(instructionsMenuItem);
 		menuBar.add(settingsMenu);
 		
-		//add actionlistener to menu items
+		//add actionlistener to menu item
 		homeMenuItem.addActionListener(listener);
 		instructionsMenuItem.addActionListener(listener);
-		settingsMenu.addActionListener(listener);
 		
 		//add menubar to frame
 		add(menuBar);
@@ -62,18 +71,44 @@ public abstract class Frame extends JFrame{
 	}
 
 	private void createButtons() {
+		soundButton.setBackground(Color.decode("#f7e599"));
 		soundButton.setBounds(1134, 0, 50, 50);
 		add(soundButton);
 		
 	}
-
+	
 	private void setUpFrame() {
 		setSize(1200, 600);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		getContentPane().setBackground(Color.decode("#cadde8"));
 		setLayout(null);
 		
 	}
 	
-	public JMenuBar getMenuBar() {
+	//This method sets up the design labels for hte background of a frame.
+	//It is a protected method so that the frames that need it can use it.
+	//Some frames won't have this, so this won't be called in the constructor 
+	//of this class.
+	protected void setUpDesignLabels() {		
+		//add labels with images to the arraylist
+		for (ImageIcon image: blokusDesignImages) {
+			blokusDesignLabels.add(new JLabel(image));
+		}
+		
+		//set bounds for each label
+		blokusDesignLabels.get(0).setBounds(0, 23, 267, 272);
+		blokusDesignLabels.get(1).setBounds(0, 297, 229, 266);
+		blokusDesignLabels.get(2).setBounds(1041, 23, 159, 318);
+		blokusDesignLabels.get(3).setBounds(905, 218, 281, 355);
+		
+		//add labels to frame
+		for (JLabel label: blokusDesignLabels) {
+			add(label);
+		}
+		
+	}
+	
+	public JMenuBar getJMenuBar() {
 		return menuBar;
 	}
 
@@ -111,6 +146,30 @@ public abstract class Frame extends JFrame{
 
 	public void setSoundButton(JButton soundButton) {
 		this.soundButton = soundButton;
+	}
+
+	public ImageIcon getSpeakerImage() {
+		return speakerImage;
+	}
+
+	public void setSpeakerImage(ImageIcon speakerImage) {
+		this.speakerImage = speakerImage;
+	}
+
+	public ImageIcon[] getBlokusDesignImages() {
+		return blokusDesignImages;
+	}
+
+	public void setBlokusDesignImages(ImageIcon[] blokusDesignImages) {
+		this.blokusDesignImages = blokusDesignImages;
+	}
+
+	public ArrayList<JLabel> getBlokusDesignLabels() {
+		return blokusDesignLabels;
+	}
+
+	public void setBlokusDesignLabels(ArrayList<JLabel> blokusDesignLabels) {
+		this.blokusDesignLabels = blokusDesignLabels;
 	}
 
 }
