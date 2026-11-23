@@ -1,8 +1,10 @@
 package view;
 
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.*;
+import model.*;
 
 //This is the player panel
 //It will display the score of all players
@@ -40,7 +42,7 @@ public class PlayerPanel extends JPanel implements Update{
 		//this is used to set the bounds of the labels 
 		int yPosition = 0;
 		
-		//set up labels
+		//set up labels' visual
 		for (int index = 0; index < nameLabels.length; index++) {
 			/*
 			nameLabels[index].setForeground();
@@ -73,8 +75,17 @@ public class PlayerPanel extends JPanel implements Update{
 	}
 	
 	@Override
-	public void update() {
+	public void update(Game game) {
+		//get the player objects from game class
+		ArrayList<Player> players = game.getPlayers();
+		int playerNum = 0;
+		
+		
 		//set the text of the player's score label to their new score
+		for (JLabel label: scoreLabels) {
+			label.setText(Integer.toString(players.get(playerNum).getScore()));
+			
+		}
 		
 	}
 	

@@ -38,15 +38,17 @@ public class BlokusFrame extends Frame{
 		BoardPanel boardPanel = new BoardPanel();
 		PiecePanel piecePanel = new PiecePanel();
 		PlayerPanel playerPanel = new PlayerPanel();
+		//create scroll pane for piece panel
+		JScrollPane scrollPanel = new JScrollPane(piecePanel);
 		
 		//set bounds for each panel
-		
-		
+		boardPanel.setBounds(150, 100, 400, 400);
+		scrollPanel.setBounds(750, 175, 400, 350);
 		playerPanel.setBounds(750, 60, 400, 100);
 		
 		//add panels to frame
-		
-		
+		add(boardPanel);
+		add(scrollPanel);
 		add(playerPanel);
 		
 	}
