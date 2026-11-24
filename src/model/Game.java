@@ -19,6 +19,10 @@ public class Game {
 		return board;
 	}
 
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+	
 	public void nextPlayer() {
 		if (isGameOver()) {
 			currentPlayer++;
