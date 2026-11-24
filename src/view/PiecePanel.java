@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import javax.swing.*;
 
-import model.Game;
+import model.*;
 
 //This is the piece panel
 //It will hold and display the pieces the player currently owns
@@ -18,6 +18,7 @@ public class PiecePanel extends JPanel implements Update{
 	//instance variables
 	private ArrayList<JLabel> playerPieces = new ArrayList<JLabel>();
 	private ArrayList<ImageIcon> pieceImages = new ArrayList<ImageIcon>();
+	private ArrayList<ImageIcon> greyPieceImages = new ArrayList<ImageIcon>();
 	
 	private File pieceFile = new File("text/PieceFile.txt");
 	
@@ -25,7 +26,6 @@ public class PiecePanel extends JPanel implements Update{
 	public PiecePanel() {
 		super();
 		setUpPiecePanel();
-		
 		
 	}
 
@@ -56,6 +56,8 @@ public class PiecePanel extends JPanel implements Update{
 	}
 
 	private void fillPieceArray() {
+		String piece; //This is used to hold name of piece when reading file
+		
 		//Read text file and fill piece array with images
 		try {
 			Scanner inputFile = new Scanner(pieceFile);
@@ -63,8 +65,10 @@ public class PiecePanel extends JPanel implements Update{
 			inputFile.useDelimiter(".txt\r\n");
 			//repeat while there is still a next line in the .txt file
 			while(inputFile.hasNext()) {
+				piece = inputFile.next();
 				//add new image to image array
-				pieceImages.add(new ImageIcon("images2/blue" + inputFile.next() + ".png"));
+				pieceImages.add(new ImageIcon("images/blue" + piece  + ".png"));
+				greyPieceImages.add(new ImageIcon("images/grey" + piece + ".png"));
 			}
 			inputFile.close();
 			
@@ -75,9 +79,22 @@ public class PiecePanel extends JPanel implements Update{
 		
 	}
 
+	//update the visuals of the panel
 	@Override
 	public void update(Game game) {
+		//get the array list of player's pieces
+		ArrayList<Piece> pieces = game.getPlayers().get(0).getPieces();
 		
+		int index = 0;
+		
+		//repeat for all pieces in array and check which are already placed
+		for (Piece piece: pieces) {
+			if (piece.isPlaced());
+				//if the piece is placed, gray it out
+				playerPieces.get(index).setIcon(greyPieceImages.get(index));
+			index++;
+			
+		}
 		
 	}
 	

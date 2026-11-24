@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class PlayerPanel extends JPanel implements Update{
 		
 		setOpaque(false);
 		setLayout(null);
-		setSize(400, 100);
+		//setSize(400, 100);
 		
 	}
 
@@ -41,30 +42,36 @@ public class PlayerPanel extends JPanel implements Update{
 		
 		//this is used to set the bounds of the labels 
 		int yPosition = 0;
-		
+	
 		//set up labels' visual
 		for (int index = 0; index < nameLabels.length; index++) {
-			/*
-			nameLabels[index].setForeground();
-			nameLabels[index].setBackground();
 			
-			scoreLabels[index].setForeground();
-			scoreLabels[index].setBackground();
-			*/
+			nameLabels[index].setForeground(Color.WHITE);
+			nameLabels[index].setOpaque(true);
+			
+			scoreLabels[index].setForeground(Color.BLACK);
+			scoreLabels[index].setBackground(Color.WHITE);
+			scoreLabels[index].setOpaque(true);
+			
 			nameLabels[index].setFont(labelFont);
 			scoreLabels[index].setFont(labelFont);
 			
 		}
 		
+		nameLabels[0].setBackground(Color.BLUE);
+		nameLabels[1].setBackground(Color.RED);
+		nameLabels[2].setBackground(Color.GREEN);
+		nameLabels[3].setBackground(Color.YELLOW);
+		
 		//set bounds labels and add them (it adds them by row. 2 in a row)
 		for (int index = 0; index < nameLabels.length; index += 2) {
 			nameLabels[index].setBounds(0, yPosition, 100, 50);
-			nameLabels[index + 1].setBounds(300, yPosition, 100, 50);
+			nameLabels[index + 1].setBounds(250, yPosition, 100, 50);
 			add(nameLabels[index]);
 			add(nameLabels[index + 1]);
 			
-			scoreLabels[index].setBounds(100, yPosition, 25, 50);
-			scoreLabels[index + 1].setBounds(400, yPosition, 25, 50);
+			scoreLabels[index].setBounds(100, yPosition, 50, 50);
+			scoreLabels[index + 1].setBounds(350, yPosition, 50, 50);
 			add(scoreLabels[index]);
 			add(scoreLabels[index + 1]);
 			
@@ -74,17 +81,19 @@ public class PlayerPanel extends JPanel implements Update{
 				
 	}
 	
+	//update the visuals of the panels
 	@Override
 	public void update(Game game) {
 		//get the player objects from game class
 		ArrayList<Player> players = game.getPlayers();
-		int playerNum = 0;
 		
+		int index = 0; //used when changing labels
 		
 		//set the text of the player's score label to their new score
-		for (JLabel label: scoreLabels) {
-			label.setText(Integer.toString(players.get(playerNum).getScore()));
+		for (Player player: players) {
+			scoreLabels[index].setText(Integer.toString(player.getScore()));
 			
+			index++;
 		}
 		
 	}

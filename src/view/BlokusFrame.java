@@ -2,18 +2,27 @@ package view;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
+
+import model.Game;
 
 //This is the blokus frame
 //It will be used to play blokus. It will feature the board, a panel to hold
 //all the player's pieces, and a score board
 
-public class BlokusFrame extends Frame{
+public class BlokusFrame extends Frame {
 
 	//instance variables
 	private JLabel numRotAndFlipLabel = new JLabel();
 	private JLabel playerTurnLabel = new JLabel();
+	
+	private BoardPanel boardPanel;
+	private PiecePanel piecePanel;
+	private PlayerPanel playerPanel;
 	
 	private Font labelFont = new Font("Arial", Font.BOLD, 20);
 	
@@ -35,9 +44,9 @@ public class BlokusFrame extends Frame{
 
 	private void setUpPanels() {
 		//create blokus, piece, and score panel
-		BoardPanel boardPanel = new BoardPanel();
-		PiecePanel piecePanel = new PiecePanel();
-		PlayerPanel playerPanel = new PlayerPanel();
+		boardPanel = new BoardPanel();
+		piecePanel = new PiecePanel();
+		playerPanel = new PlayerPanel();
 		//create scroll pane for piece panel
 		JScrollPane scrollPanel = new JScrollPane(piecePanel);
 		
@@ -69,19 +78,19 @@ public class BlokusFrame extends Frame{
 		
 	}
 
-	private void updateBoard() {
-		
+	public void updateBoard(Game game) {
+		boardPanel.update(game);
 	}
 	
-	private void updatePieces() {
-		
+	public void updatePieces(Game game) {
+		piecePanel.update(game);
 	}
 	
-	private void updatePlayer() {
-		
+	public void updatePlayer(Game game) {
+		playerPanel.update(game);
 	}	
 	
-	private int showResults() {
+	public int showResults() {
 		//sort players to find player with highest score
 		
 		//get the name of winning player 
@@ -95,5 +104,54 @@ public class BlokusFrame extends Frame{
 		return startNew;
 		
 	}
-	
+
+	//Getters and setters
+	public JLabel getNumRotAndFlipLabel() {
+		return numRotAndFlipLabel;
+	}
+
+	public void setNumRotAndFlipLabel(JLabel numRotAndFlipLabel) {
+		this.numRotAndFlipLabel = numRotAndFlipLabel;
+	}
+
+	public JLabel getPlayerTurnLabel() {
+		return playerTurnLabel;
+	}
+
+	public void setPlayerTurnLabel(JLabel playerTurnLabel) {
+		this.playerTurnLabel = playerTurnLabel;
+	}
+
+	public BoardPanel getBoardPanel() {
+		return boardPanel;
+	}
+
+	public void setBoardPanel(BoardPanel boardPanel) {
+		this.boardPanel = boardPanel;
+	}
+
+	public PiecePanel getPiecePanel() {
+		return piecePanel;
+	}
+
+	public void setPiecePanel(PiecePanel piecePanel) {
+		this.piecePanel = piecePanel;
+	}
+
+	public PlayerPanel getPlayerPanel() {
+		return playerPanel;
+	}
+
+	public void setPlayerPanel(PlayerPanel playerPanel) {
+		this.playerPanel = playerPanel;
+	}
+
+	public Font getLabelFont() {
+		return labelFont;
+	}
+
+	public void setLabelFont(Font labelFont) {
+		this.labelFont = labelFont;
+	}
+
 }
