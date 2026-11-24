@@ -11,7 +11,7 @@ public class Board {
 
 	}
 
-	private boolean isValidMove(Piece peice, int row, int col, Player player) {
+	public boolean isValidMove(Piece peice, int row, int col, Player player) {
 
 		boolean touchesDiagonal = false;
 		boolean firstMoveOnCorner = false;
@@ -74,7 +74,7 @@ public class Board {
 
 	}
 
-	private boolean hasPossibleMove(Player player) {
+	public boolean hasPossibleMove(Player player) {
 
 		for (Piece peice : player.getPieces()) {
 			if (searchMove(peice, 0, 0, player))
@@ -84,7 +84,7 @@ public class Board {
 		return false;
 	}
 
-	private boolean searchMove(Piece peice, int row, int col, Player player) {
+	public boolean searchMove(Piece peice, int row, int col, Player player) {
 		
 		boolean possibleMove = false;
 		
@@ -112,7 +112,7 @@ public class Board {
 			return (searchMove(peice, row, col + 1, player));
 	}
 	
-	private void place(Piece peice, int row, int col, Player player) {
+	public void place(Piece peice, int row, int col, Player player) {
 		
 		for (Block block: peice.getBlocks()) {
 			
