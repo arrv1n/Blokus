@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.Point;
+
 import javax.swing.*;
 
 import model.*;
@@ -42,12 +44,37 @@ public class BoardPanel extends JPanel implements Update{
 		
 	}
 
+	//update the visuals of the panel
 	@Override
 	public void update(Game game) {
 		Board board = game.getBoard();
 		
+		//Update placed pieces
+		//get the value of each tile on the board
+		for (int i = 0; i < 20; i++) {
+			for (int e = 0; e < 20; e++) {
+				//System.out.println(board[i][e]);
+				
+				
+			}
+		}
+		
+		//Show valid moves
+		//get the current player's turn colour
+		//repeat through all tiles
+		//check if is valid move. piece used is single tile
+		//if it is a valid move, show it
 		
 	}
 	
-
+	public void showGhostPiece(int x, int y) {
+		//make sure the mouse is in the bounds of the panel
+		if (x > 1 && x < 1 && y > 1 && y < 1 ) {
+			
+			
+			
+		}
+		
+	}
+	
 }
