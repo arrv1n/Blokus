@@ -7,12 +7,12 @@ public class Game {
 	private int currentPlayer;
 	private boolean gameOver;
 	
-	public Game(Board board, ArrayList<Player> players, int currentPlayer, boolean gameOver) {
+	public Game(ArrayList<Player> players) {
 		super();
-		board = new Board();
+		this.board = new Board();
 		this.players = players;
-		currentPlayer = 0;
-		gameOver = false;
+		this.currentPlayer = 0;
+		this.gameOver = false;
 	}
 
 	public Board getBoard() {
