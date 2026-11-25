@@ -73,7 +73,7 @@ public class BoardPanel extends JPanel implements Update, MouseListener{
 		for (int x = 0; x < 20; x++) {
 			for (int y = 0; y < 20; y++) {
 				//Check the colour of each tile in the board and change the colour of label
-				switch(gameBoard.getGameBoard()[x][y]) {
+				switch(gameBoard.getGameBoard(x,y)) {
 					case BLUE:
 						board[x][y].setIcon(tileImages[1]);
 						break;
@@ -93,12 +93,12 @@ public class BoardPanel extends JPanel implements Update, MouseListener{
 				
 				//Show valid moves
 				//get the current player's turn colour
-				Player currentPlayer = game.getPlayers().get(game.getCurrentPlayer());
+				Player currentPlayer = game.getCurrentPlayer();
 				//PlayerColour colour = game.getPlayers().get(game.getCurrentPlayer()).getColor();
 				//check if is valid move. piece used is single tile
 				if (gameBoard.isValidMove(checkPiece, x, y, currentPlayer)) {
 					//if it is a valid move for the current player's colour, show it
-					switch(currentPlayer.getColor()) {
+					switch(currentPlayer.getColour()) {
 					case BLUE:
 						board[x][y].setIcon(validTileImages[0]);
 						break;
@@ -138,6 +138,10 @@ public class BoardPanel extends JPanel implements Update, MouseListener{
 		}
 		
 	}
+	
+	public JLabel[][] getBoardLabels() {
+        return board;
+    }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
