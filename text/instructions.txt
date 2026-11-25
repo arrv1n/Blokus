@@ -1,20 +1,19 @@
-1. Starting the game: Each player will use their first turn to 
-place a piece in their corner of the board.
+1. Starting the game: Each player will use their first turn to place a piece 
+in their corner of the board.
 
-2. Placing pieces: Pieces must be placed so that they are 
-touching the corner of a piece of the same colour. Pieces 
-of the same colour cannot touch along their sides. Pieces 
-of differing colours can freely touch each other's side.
-Once pieces are placed, they cannot be moved.
+2. Placing pieces: Pieces must be placed so that they are touching the 
+corner of a piece of the same colour. Pieces of the same colour cannot 
+touch along their sides. Pieces of differing colours can freely touch each 
+other's side. Once pieces are placed, they cannot be moved.
 
-3. Rotating and flipping: In this version of the game, 
-pieces are able to be rotated and flipped only 10 times 
-per game.
-To flip/rotate, press.
+3. Rotating and flipping: In this version of the game, pieces are able to be 
+rotated and flipped only 10 times per game.
+To flip, press "F".
+To rotate, press "R".
 
-4. Ending the game: The game ends when all players are no
-longer able to place anymore of their pieces.
+4. Ending the game: The game ends when all players are no longer able to 
+place anymore of their pieces.
 
-5. Scoring: Player's scores are determined by counting the 
-number of squares in the unplaced pieces. The player with 
-the lowest number of squares wins.
+5. Scoring: Player's scores are determined by counting the number of 
+squares in the placed pieces. 
+The player with the highest number of squares wins.
