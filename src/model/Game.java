@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Game {
 	
 	private Board board;
@@ -18,13 +20,17 @@ public class Game {
 	public Board getBoard() {
 		return board;
 	}
-
-	public int getCurrentPlayer() {
-		return currentPlayer;
-	}
 	
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
+	public Player getCurrentPlayer() {
+		return players.get(currentPlayer);
+	}
+
 	public void nextPlayer() {
-		if (isGameOver()) {
+		if (!isGameOver()) {
 			currentPlayer++;
 			if (currentPlayer >= players.size())
 				currentPlayer = 0;
@@ -37,6 +43,44 @@ public class Game {
 	
 	public void endGame() {
 		gameOver = true;
+	}
+	
+	public boolean hasPossibleMove(Player player) {
+	    return board.hasPossibleMove(player);
+	}
+	
+	public boolean hasAnyLegalMove() {
+
+	    for (Player player : players) {
+	        if (hasPossibleMove(player)) {
+	            return true;
+	        }
+	    }
+
+	    return false;
+	}
+	
+	public boolean placePiece(Piece piece, int row, int col) {
+
+	    Player player = getCurrentPlayer();
+
+	    if (gameOver || piece == null || piece.isPlaced()) {
+	        return false;
+	    }
+
+//	    if (!player.getPieces().contains(piece)) {
+//	        return false;
+//	    }
+
+	    if (!board.place(piece, row, col, player)) {
+	        return false;
+	    }
+
+	    piece.setPlaced(true);
+	    player.addScore(piece.getBlocks().size());
+	    player.setFirstMove(false);
+
+	    return true;
 	}
 	
 }
