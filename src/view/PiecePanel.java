@@ -13,7 +13,7 @@ import model.*;
 //It will hold and display the pieces the player currently owns
 //and can use
 
-public class PiecePanel extends JPanel implements Update{
+public class PiecePanel extends JPanel implements Update {
 	
 	//instance variables
 	private ArrayList<JLabel> playerPieces = new ArrayList<JLabel>();
@@ -21,7 +21,6 @@ public class PiecePanel extends JPanel implements Update{
 	private ArrayList<ImageIcon> greyPieceImages = new ArrayList<ImageIcon>();
 	
 	private File pieceFile = new File("text/PieceFile.txt");
-	
 	
 	public PiecePanel() {
 		super();
@@ -66,7 +65,9 @@ public class PiecePanel extends JPanel implements Update{
 			//repeat while there is still a next line in the .txt file
 			while(inputFile.hasNext()) {
 				piece = inputFile.next();
-				//add new image to image array
+				// add new image to image array
+// !!!!修改
+				// String colour = game.getCurrentPlayer().getColour().name().toLowerCase();
 				pieceImages.add(new ImageIcon("images/blue" + piece  + ".png"));
 				greyPieceImages.add(new ImageIcon("images/grey" + piece + ".png"));
 			}
@@ -78,24 +79,30 @@ public class PiecePanel extends JPanel implements Update{
 		}
 		
 	}
+	
+	 public ArrayList<JLabel> getPlayerPieces() {
+	        return playerPieces;
+	    }
 
-	//update the visuals of the panel
-	@Override
-	public void update(Game game) {
-		//get the array list of player's pieces
-		ArrayList<Piece> pieces = game.getPlayers().get(0).getPieces();
-		
-		int index = 0;
-		
-		//repeat for all pieces in array and check which are already placed
-		for (Piece piece: pieces) {
-			if (piece.isPlaced());
-				//if the piece is placed, gray it out
-				playerPieces.get(index).setIcon(greyPieceImages.get(index));
-			index++;
-			
-		}
-		
-	}
+	// update the visuals of the panel
+	 @Override
+	 public void update(Game game) {
+	     Player player = game.getCurrentPlayer();
+	     ArrayList<Piece> pieces = player.getPieces();
+	     String colour = player.getColour().name().toLowerCase();
+	     int index = 0;
+	     for (Piece piece : pieces) {
+	         String imageName;
+	         if (piece.isPlaced()) {
+	             imageName = "grey" + piece.getName();
+	         } else {
+	             imageName = colour + piece.getName();
+	         }
+
+	         playerPieces.get(index).setIcon(new ImageIcon("images/" + imageName + ".png"));
+	         
+	         index++;
+	     }
+	 }
 	
 }
