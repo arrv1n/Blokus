@@ -42,7 +42,6 @@ public class TitleFrame extends Frame{
 		
 		setTitle("Blokus");
 		setVisible(true);
-		
 	}
 
 	private void setUpButtons(ActionListener listener) {
@@ -55,6 +54,8 @@ public class TitleFrame extends Frame{
 		
 		//Set the font and bounds of each button and add to frame
 		for (JButton currentButton: buttons) {
+			currentButton.setOpaque(true);
+			currentButton.setBorderPainted(false);
 			currentButton.setForeground(Color.WHITE);
 			currentButton.setFont(buttonFont);
 			currentButton.setBounds(375, yPosition, 400, 50);
