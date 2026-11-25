@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.MenuBar;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -56,14 +57,14 @@ public abstract class Frame extends JFrame{
 		instructionsMenuItem.setBackground(Color.decode("#f7e599"));
 		menuBar.setBackground(Color.decode("#f7e599"));
 		
-		//add actionlistener to menu item
-		homeMenuItem.addActionListener(listener);
-		instructionsMenuItem.addActionListener(listener);
-		
 		//add menu items to menu bar
 		menuBar.add(homeMenuItem);
 		menuBar.add(instructionsMenuItem);
 		menuBar.add(settingsMenu);
+		
+		//add actionlistener to menu item
+		homeMenuItem.addActionListener(listener);
+		instructionsMenuItem.addActionListener(listener);
 		
 		//add menubar to frame
 		add(menuBar);
@@ -107,6 +108,19 @@ public abstract class Frame extends JFrame{
 			add(label);
 		}
 		
+	}
+	
+	public void updateSoundIcon(boolean soundOn) {
+
+	    if (soundOn) {
+	        soundButton.setIcon(new ImageIcon("images/soundIcon.png"));
+	        
+	    } else {
+	    	 ImageIcon soundOffImage = new ImageIcon("images/SoundOff.png");
+	    	 Image scaledImage = soundOffImage.getImage().getScaledInstance(46, 26, Image.SCALE_SMOOTH);
+	    	 soundButton.setIcon(new ImageIcon(scaledImage));
+	        
+	    }
 	}
 	
 	public JMenuBar getJMenuBar() {
