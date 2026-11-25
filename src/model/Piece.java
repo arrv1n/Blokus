@@ -14,7 +14,7 @@ public class Piece {
 		this.name = name;
 		this.color = color;
 		this.orientation = orientation;
-		placed = false;
+		this.placed = placed;
 		blocks = new ArrayList<Block>();
 	}
 	
@@ -25,8 +25,10 @@ public class Piece {
 	public void rotate() {
 		
 		for (Block block: blocks) {
-			block.setRow(block.getCol());
-			block.setCol(-block.getRow());
+			int oldRow = block.getRow();
+	        int oldCol = block.getCol();
+	        block.setRow(oldCol);
+	        block.setCol(-oldRow);
 		}
 		
 		orientation = "90";
@@ -38,10 +40,6 @@ public class Piece {
 		}
 		
 		orientation += " flipped";
-	}
-	
-	public void setPlace() {
-		placed = true;
 	}
 	
 	public String getName() {
@@ -67,6 +65,10 @@ public class Piece {
 
 	public ArrayList<Block> getBlocks() {
 		return blocks;
+	}
+
+	public int size() {
+	    return blocks.size();
 	}
 	
 
