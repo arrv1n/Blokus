@@ -15,9 +15,6 @@ public class Block {
 	}
 	
 	public void setRow(int row) {
-		if (row < 0 || row > 19)
-			System.out.println("Invalid col Spot");
-		else
 			this.row = row;
 	}
 	
@@ -26,9 +23,7 @@ public class Block {
 	}
 	
 	public void setCol(int col) {
-		if (col < 0 || col > 19)
-			System.out.println("Invalid row Spot");
-		else
 			this.col = col;
 	}
+	
 }
