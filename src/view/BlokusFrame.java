@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.*;
 
 import model.Game;
+import model.Player;
 
 //This is the blokus frame
 //It will be used to play blokus. It will feature the board, a panel to hold
@@ -89,6 +90,16 @@ public class BlokusFrame extends Frame {
 	public void updatePlayer(Game game) {
 		playerPanel.update(game);
 	}	
+	
+	public void updateTurn(Player player) {
+	    playerTurnLabel.setText(player.getName() + "'s Turn!");
+	}
+	
+	public void updateTransformations(int amount) {
+
+	    numRotAndFlipLabel.setText("Number of Rotation/Flip Left: " + amount);
+	    
+	}
 	
 	public int showResults() {
 		//sort players to find player with highest score
