@@ -66,7 +66,6 @@ public class PiecePanel extends JPanel implements Update {
 			while(inputFile.hasNext()) {
 				piece = inputFile.next();
 				// add new image to image array
-// !!!!修改
 				// String colour = game.getCurrentPlayer().getColour().name().toLowerCase();
 				pieceImages.add(new ImageIcon("images/blue" + piece  + ".png"));
 				greyPieceImages.add(new ImageIcon("images/grey" + piece + ".png"));
