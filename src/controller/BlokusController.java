@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -23,7 +24,7 @@ import view.InstructionsFrame;
 import view.PiecePanel;
 import view.TitleFrame;
 
-public class BlokusController implements ActionListener, MouseListener, KeyListener {
+public class BlokusController implements ActionListener, MouseListener, KeyListener, MouseMotionListener {
 
     private Game game;
 
@@ -120,6 +121,7 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
         blokusFrame.setVisible(true);
         
         blokusFrame.addKeyListener(this);
+        blokusFrame.addMouseMotionListener(this);
         
         // add link 
         blokusFrame.requestFocusInWindow();
@@ -188,6 +190,7 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
 
         chosenPiece = piece;
         updateGhostPiece();
+        blokusFrame.updateCursorImage(chosenPiece);
     }
 
     // 7. Show and clear the ghost piece
@@ -197,6 +200,8 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
             return;
         }
 
+        blokusFrame.hideCursorImage();
+        
         JLabel label = (JLabel) event.getSource();
 
         if (label.getParent() == blokusFrame.getBoardPanel()) {
@@ -480,4 +485,22 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
     public Piece getChosenPiece() {
         return chosenPiece;
     }
+
+    @Override
+	public void mouseDragged(MouseEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+    
+	@Override
+	public void mouseMoved(MouseEvent event) {
+		if (chosenPiece != null) {
+			int index = game.getCurrentPlayer().getPieces().indexOf(chosenPiece);
+			blokusFrame.updateCursorPosition(event.getX(), event.getY());
+		}
+		else if (chosenPiece == null) {
+			blokusFrame.hideCursorImage();
+		}
+		
+	}
 }
