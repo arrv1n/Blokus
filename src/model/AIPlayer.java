@@ -190,6 +190,10 @@ public class AIPlayer extends Player {
     }
 
     // Getters
+    public boolean getBest() {
+    	return best;
+    }
+    
     public Piece getBestPiece() {
         return bestPiece;
     }
