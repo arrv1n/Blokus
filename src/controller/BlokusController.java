@@ -295,6 +295,7 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
             chosenPiece.rotate();
             blokusFrame.updateTransformations(player.getRotationflipLeft());
             updateGhostPiece();
+			blokusFrame.updateCursorImage(chosenPiece);
         }
     }
 
@@ -309,6 +310,7 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
             chosenPiece.flip();
             blokusFrame.updateTransformations(player.getRotationflipLeft());
             updateGhostPiece();
+			blokusFrame.updateCursorImage(chosenPiece);
         }
     }
 
