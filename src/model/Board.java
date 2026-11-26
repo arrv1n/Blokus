@@ -14,6 +14,9 @@ public class Board {
 	    return gameBoard[row][col];
 	}
 
+	public void setSquare(int row, int col, PlayerColour colour) {
+    gameBoard[row][col] = colour;
+	}	
 	public boolean isValidMove(Piece peice, int row, int col, Player player) {
 
 		boolean touchesDiagonal = false;
