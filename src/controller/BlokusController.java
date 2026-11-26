@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.Scanner;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -55,7 +57,7 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
             startNewGame();
 
         } else if (source == buttons[1]) {
-        	resumeGame();
+        	loadGame();
         	
         } else if (source == buttons[2] || isInstructionsEvent(source)) {
             showInstructions();
@@ -66,9 +68,11 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
         } else if (isSoundEvent(source)) {
             toggleSound();
         }
-//        } else if (blokusFrame != null && source == blokusFrame.getPassButton()) {
-//            passTurn();
-//        }
+
+    }
+    
+    public void loadGame() {
+    	
     }
 
     private boolean isHomeEvent(Object source) {
@@ -90,9 +94,12 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
 
         try {
             players.add(new Player("Player 1", PlayerColour.BLUE));
-            players.add(new Player("Player 2", PlayerColour.RED));
-            players.add(new Player("Player 3", PlayerColour.YELLOW));
-            players.add(new Player("Player 4", PlayerColour.GREEN));
+//            players.add(new Player("Player 2", PlayerColour.RED));
+//            players.add(new Player("Player 3", PlayerColour.YELLOW));
+//            players.add(new Player("Player 4", PlayerColour.GREEN));
+            players.add(new AIPlayer("CPU 1", PlayerColour.RED, true));
+            players.add(new AIPlayer("CPU 2", PlayerColour.YELLOW, true));
+            players.add(new AIPlayer("CPU 3", PlayerColour.GREEN, true));
         } catch (RuntimeException error) {
             JOptionPane.showMessageDialog(titleFrame,
                     "Unable to load pieces: " + error.getMessage());
@@ -114,15 +121,15 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
         
         blokusFrame.addKeyListener(this);
         
+        // add link 
+        blokusFrame.requestFocusInWindow();
+        
         connectGameListeners();
-        refreshGameView();
+        nextTurn();
         updateSoundButtons();
         
     }
     
-    public void resumeGame() {
-    	
-    }
 
     // 5. Connect each JLabel to this Controller
     private void connectGameListeners() {
@@ -180,7 +187,6 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
         }
 
         chosenPiece = piece;
-//        blokusFrame.getPiecePanel().highlightPiece(index);
         updateGhostPiece();
     }
 
@@ -255,6 +261,10 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
             case KeyEvent.VK_F:
                 flipPiece();
                 break;
+                
+            case KeyEvent.VK_P:
+                nextTurn();
+                break;
 
         }
     }
@@ -317,40 +327,51 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
         }
     }
 
-    // 10. Pass, advance the turn and refresh every panel
-    public void passTurn() {
-        if (game == null || game.isGameOver()) {
+    // 10. Pass to the next turn
+    public void nextTurn() {
+    	
+        if (game == null || game.isGameOver() || game.getCurrentPlayer() instanceof AIPlayer) {
             return;
         }
-
-        if (game.hasPossibleMove(game.getCurrentPlayer())) {
-            JOptionPane.showMessageDialog(blokusFrame, "You still have a legal move.");
-            return;
-        }
-
-        nextTurn();
-    }
-
-    private void nextTurn() {
+        
         chosenPiece = null;
         hoveredTile = null;
 
         game.nextPlayer();
-        refreshGameView();
-        checkGameOver();
-    }
+        
+        
+        while (game.getCurrentPlayer() instanceof AIPlayer) {
+            AIPlayer cpu = (AIPlayer) game.getCurrentPlayer();
 
-    private void refreshGameView() {
-        if (game == null || blokusFrame == null) {
-            return;
+            if (cpu.findMove(game.getBoard())) {
+                Piece piece = cpu.getBestPiece();
+                int row = cpu.getBestRow();
+                int col = cpu.getBestCol();
+
+                cpu.applyBestOrientation();
+
+                if (!game.placePiece(piece, row, col)) {
+                    JOptionPane.showMessageDialog(blokusFrame, "The CPU move could not be placed.");
+                    return;
+                }
+
+                cpu.useTransformations(cpu.getbestTransformation());
+            }
+
+            // A successful CPU move or a CPU pass ends the turn.
+            game.nextPlayer();
         }
-
+        
         blokusFrame.updateBoard(game);
         blokusFrame.updatePieces(game);
         blokusFrame.updatePlayer(game);
         blokusFrame.updateTurn(game.getCurrentPlayer());
         blokusFrame.updateTransformations(game.getCurrentPlayer().getRotationflipLeft());
+        
+        checkGameOver();
+        
     }
+
 
     // 11. End the game when none of the players can move
     public void checkGameOver() {
@@ -361,9 +382,8 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
         if (!game.hasAnyLegalMove()) {
             game.endGame();
             blokusFrame.updateBoard(game);
-            // blokusFrame.getPassButton().setEnabled(false);
 
-            int choice = blokusFrame.showResults();
+            int choice = blokusFrame.showResults(game);
 
             if (choice == 0) {
                 startNewGame();
@@ -406,7 +426,7 @@ public class BlokusController implements ActionListener, MouseListener, KeyListe
 
     // 13. Optional sound
     private void initializeSound() {
-        File file = new File("audio/bgm.wav");
+        File file = new File("music/bgm.wav");
         if (!file.isFile()) {
             return;
         }
