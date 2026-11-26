@@ -80,6 +80,34 @@ public class PiecePanel extends JPanel implements Update {
 		
 	}
 	
+	 public ArrayList<ImageIcon> getPieceImages() {
+		return pieceImages;
+	}
+
+	public void setPieceImages(ArrayList<ImageIcon> pieceImages) {
+		this.pieceImages = pieceImages;
+	}
+
+	public ArrayList<ImageIcon> getGreyPieceImages() {
+		return greyPieceImages;
+	}
+
+	public void setGreyPieceImages(ArrayList<ImageIcon> greyPieceImages) {
+		this.greyPieceImages = greyPieceImages;
+	}
+
+	public File getPieceFile() {
+		return pieceFile;
+	}
+
+	public void setPieceFile(File pieceFile) {
+		this.pieceFile = pieceFile;
+	}
+
+	public void setPlayerPieces(ArrayList<JLabel> playerPieces) {
+		this.playerPieces = playerPieces;
+	}
+
 	 public ArrayList<JLabel> getPlayerPieces() {
 	        return playerPieces;
 	    }
@@ -99,6 +127,7 @@ public class PiecePanel extends JPanel implements Update {
 	             imageName = colour + piece.getName();
 	         }
 
+	         pieceImages.set(index, new ImageIcon("images/" + imageName + ".png"));
 	         playerPieces.get(index).setIcon(new ImageIcon("images/" + imageName + ".png"));
 	         
 	         index++;

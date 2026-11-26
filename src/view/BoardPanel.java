@@ -9,7 +9,7 @@ import javax.swing.*;
 
 import model.*;
 
-public class BoardPanel extends JPanel implements Update, MouseListener{
+public class BoardPanel extends JPanel implements Update{
 	
 	//instance variables
 	private JLabel[][] board = new JLabel[20][20];
@@ -52,7 +52,6 @@ public class BoardPanel extends JPanel implements Update, MouseListener{
 				//create the labels and set bounds
 				board[x][y] = new JLabel(tileImages[0]);
 				board[x][y].setBounds(xPosition, yPosition, TILE_SIZE, TILE_SIZE);
-				board[x][y].addMouseListener(this);
 				add(board[x][y]);
 				
 				yPosition += TILE_SIZE; //Increment y position (go down a row)
@@ -73,7 +72,7 @@ public class BoardPanel extends JPanel implements Update, MouseListener{
 		for (int x = 0; x < 20; x++) {
 			for (int y = 0; y < 20; y++) {
 				//Check the colour of each tile in the board and change the colour of label
-				switch(gameBoard.getGameBoard(x,y)) {
+				switch(gameBoard.getGameBoard(x, y)) {
 					case BLUE:
 						board[x][y].setIcon(tileImages[1]);
 						break;
@@ -88,7 +87,7 @@ public class BoardPanel extends JPanel implements Update, MouseListener{
 						break;
 					case null:
 						board[x][y].setIcon(tileImages[0]);
-						
+							
 				}
 				
 				//Show valid moves
@@ -115,7 +114,9 @@ public class BoardPanel extends JPanel implements Update, MouseListener{
 					}
 				
 				}
+				
 			}
+			
 		}
 		
 	}
@@ -131,54 +132,71 @@ public class BoardPanel extends JPanel implements Update, MouseListener{
 			//Get where the blocks will go
 			int newRow = row + block.getRow();
 			int newCol = col + block.getCol();
-		
-			//change the tiles on the board
-			board[newRow][newCol].setIcon(tileImages[1]);
+			
+			int index = 1;//This is used to get the correct colour of tile
+			//check it is in bounds of board and change the tiles on the board
+			if (newRow >= 0 && newRow < board.length && newCol >= 0 && newCol < board.length) {
+				//check the colour of the piece
+				switch(piece.getColor()) {
+					case "BLUE":
+						index = 1;
+						break;
+					case "RED":
+						index = 2;
+						break;
+					case "YELLOW":
+						index = 3;
+						break;
+					case "GREEN":
+						index = 4;
+					
+				}
+				//change tile to colour of piece
+				board[newRow][newCol].setIcon(tileImages[index]);
+			}
 			
 		}
 		
 	}
-	
+
+	public JLabel[][] getBoard() {
+		return board;
+	}
+
+	public void setBoard(JLabel[][] board) {
+		this.board = board;
+	}
+
+	public ImageIcon[] getTileImages() {
+		return tileImages;
+	}
+
+	public void setTileImages(ImageIcon[] tileImages) {
+		this.tileImages = tileImages;
+	}
+
+	public ImageIcon[] getValidTileImages() {
+		return validTileImages;
+	}
+
+	public void setValidTileImages(ImageIcon[] validTileImages) {
+		this.validTileImages = validTileImages;
+	}
+
+	public Piece getCheckPiece() {
+		return checkPiece;
+	}
+
+	public void setCheckPiece(Piece checkPiece) {
+		this.checkPiece = checkPiece;
+	}
+
+	public int getTILE_SIZE() {
+		return TILE_SIZE;
+	}
+
 	public JLabel[][] getBoardLabels() {
         return board;
     }
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	//TESTING
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		//get the label that is being hovered over
-		//.getSource returns an object, so it has to be downcasted
-		//to a JLabel so that we can get the coordinates of the JLabel
-		JLabel tile = (JLabel) e.getSource();
-		
-		showGhostPiece(checkPiece, tile.getX(), tile.getY());
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		//for controller
-		//update the board to remove the ghost pieces
-		//update(game);
-		
-	}
-	
 }
