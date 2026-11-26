@@ -23,8 +23,10 @@ public class BlokusFrame extends Frame {
 	//instance variables
 	private JLabel numRotAndFlipLabel = new JLabel();
 	private JLabel playerTurnLabel = new JLabel();
-	private JLabel cursorLabel = new JLabel();
 	private JLabel resultsLabel = new JLabel();
+	
+	private JPanel cursorPanel = new JPanel();
+	private JLabel[][] cursorBlocks = new JLabel[5][5];
 	
 	private BoardPanel boardPanel;
 	private PiecePanel piecePanel;
@@ -33,7 +35,6 @@ public class BlokusFrame extends Frame {
 	private Font labelFont = new Font("Arial", Font.BOLD, 20);
 	
 	private ImageIcon trophyImage = new ImageIcon("images/trophy.png");
-	
 	
 	//constructor
 	public BlokusFrame(ActionListener listener) {
@@ -45,6 +46,7 @@ public class BlokusFrame extends Frame {
 	private void setUpBlokusFrame() {
 		setUpPanels();
 		setUpLabels();
+		setUpCursor();
 		
 		setTitle("Blokus");
 		setVisible(true);
@@ -85,11 +87,35 @@ public class BlokusFrame extends Frame {
 		playerTurnLabel.setBounds(500, 25, 200, 50);
 		add(playerTurnLabel);
 		
-		
-		add(cursorLabel);
-		
 	}
 
+	//setup the objects used for piece cursor
+	private void setUpCursor() {
+		//Variables used for setting bounds of labels
+		int xPosition = 0;
+		int yPosition = 0;
+		
+		//Fill the cursorBlocks array with Jlabels and set their bounds
+		for (int column = 0; column < cursorBlocks.length; column++) {
+			for (int row = 0; row < cursorBlocks.length; row++)  {
+				cursorBlocks[column][row] = new JLabel();
+				cursorBlocks[column][row].setBounds(xPosition, yPosition, 20, 20);
+				yPosition += 20;
+				cursorPanel.add(cursorBlocks[column][row]);
+			}
+			xPosition += 20;
+			yPosition = 0;
+		}
+		
+		//setup the cursor panel
+		cursorPanel.setSize(100, 100);
+		cursorPanel.setOpaque(false);
+		cursorPanel.setLayout(null);
+		cursorPanel.setVisible(true);
+		add(cursorPanel);
+		
+	}
+	
 	public void updateBoard(Game game) {
 		boardPanel.update(game);
 	}
@@ -181,25 +207,36 @@ public class BlokusFrame extends Frame {
 		return leaderBoard;
 	}
 
-	//This method is used to update a label following the cursor
-	public void updateCursor(int index, int x, int y) {
-		//If there is a piece selected
-		if (index != -1) {
-			//get the image for the piece
-			ImageIcon piece = (ImageIcon)piecePanel.getPlayerPieces().get(index).getIcon();
-			cursorLabel.setIcon(piece);
-			
-			//set new x and y coordinate to place cursor in middle of piece
-			x -= piece.getIconWidth() / 2;
-			y -= piece.getIconHeight() / 2;
-			//set bounds
-			cursorLabel.setBounds(x, y, piece.getIconWidth(), piece.getIconHeight());
-			
-			cursorLabel.setVisible(true);
+	//Change the piece following the cursor
+	public void updateCursorImage(Piece piece) {
+		//Clear any blocks on the cursor panel
+		for (int column = 0; column < cursorBlocks.length; column++) {
+			for (int row = 0; row < cursorBlocks.length; row++)  {
+				cursorBlocks[column][row].setIcon(null);;
+			}
+		
 		}
 		
-		else
-			cursorLabel.setIcon(null);
+		//find the colour of the piece
+		String colour = piece.getColor().toLowerCase();	
+		
+		//Change the colour of the tiles based on the piece
+		for (Block block: piece.getBlocks()) {
+			cursorBlocks[block.getCol()][block.getRow()].setIcon(
+					new ImageIcon("images/" + colour + "Tile.png"));	
+		}
+		
+	}
+	
+	//update the position of the piece cursor
+	public void updateCursorPosition(int x, int y) {
+		cursorPanel.setVisible(true);
+		cursorPanel.setBounds(x - 15, y - 30, 100, 100);
+	}
+	
+	//hide the image of the piece cursor
+	public void hideCursorImage() {
+		cursorPanel.setVisible(false);
 	}
 	
 	//Getters and setters
