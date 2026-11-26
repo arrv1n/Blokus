@@ -157,13 +157,19 @@ public class BlokusFrame extends Frame {
 		
 		//set up label that goes onto optionpane
 		resultsLabel = new JLabel("<html>" + winner + " Wins!<br><br>"
-				+ leaderBoard + "<br>Start a new game?");
+				+ leaderBoard);
 		resultsLabel.setFont(labelFont);
+
+		//Create options for optionpane
+		//source: https://stackoverflow.com/questions/44209347/creating-a-joptionpane-with-custom-actions-on-buttons
+		String[] options = {"New Game", "Home"};
+		Object option = null;
+		option = options[0];
 		
 		//Create option pane
 		//source: https://docs.oracle.com/javase/8/docs/api/javax/swing/JOptionPane.html
-		int startNew = JOptionPane.showConfirmDialog(this, resultsLabel, "Game Results", 
-				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, trophyImage);
+		int startNew = JOptionPane.showOptionDialog(this, resultsLabel, "Game Results", 
+				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, trophyImage, , options, option);
 		
 		//return the value of option selected for controller (0 = yes, 1 = no)
 		return startNew;
@@ -202,7 +208,7 @@ public class BlokusFrame extends Frame {
 		for (Player player: players.reversed()) {
 			//add on to string
 			leaderBoard = leaderBoard.concat(player.getName() + ": " + 
-					Integer.toString(player.getScore()) + "<br>");
+					Integer.toString(player.getScore()) + " Points<br>");
 		}
 		
 		return leaderBoard;
