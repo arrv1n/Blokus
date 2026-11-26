@@ -72,7 +72,7 @@ public class BoardPanel extends JPanel implements Update{
 		for (int x = 0; x < 20; x++) {
 			for (int y = 0; y < 20; y++) {
 				//Check the colour of each tile in the board and change the colour of label
-				switch(gameBoard.getGameBoard(x, y)) {
+				switch(gameBoard.getGameBoard(y, x)) {
 					case BLUE:
 						board[x][y].setIcon(tileImages[1]);
 						break;
@@ -95,7 +95,7 @@ public class BoardPanel extends JPanel implements Update{
 				Player currentPlayer = game.getCurrentPlayer();
 				//PlayerColour colour = game.getPlayers().get(game.getCurrentPlayer()).getColor();
 				//check if is valid move. piece used is single tile
-				if (gameBoard.isValidMove(checkPiece, x, y, currentPlayer)) {
+				if (gameBoard.isValidMove(checkPiece, y, x, currentPlayer)) {
 					//if it is a valid move for the current player's colour, show it
 					switch(currentPlayer.getColour()) {
 					case BLUE:
@@ -125,8 +125,8 @@ public class BoardPanel extends JPanel implements Update{
 		//get the row and column values of the hovered
 		//Since blocks are 20x20 pixels, dividing the coordinates of the label
 		//by 20 will get the row and column
-		int row = x / 20;
-		int col = y / 20;
+		int row = y / 20;
+		int col = x / 20;
 		
 		for (Block block: piece.getBlocks()) {
 			//Get where the blocks will go
@@ -152,7 +152,7 @@ public class BoardPanel extends JPanel implements Update{
 					
 				}
 				//change tile to colour of piece
-				board[newRow][newCol].setIcon(tileImages[index]);
+				board[newCol][newRow].setIcon(tileImages[index]);
 			}
 			
 		}
