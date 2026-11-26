@@ -169,7 +169,7 @@ public class BlokusFrame extends Frame {
 		//Create option pane
 		//source: https://docs.oracle.com/javase/8/docs/api/javax/swing/JOptionPane.html
 		int startNew = JOptionPane.showOptionDialog(this, resultsLabel, "Game Results", 
-				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, trophyImage, , options, option);
+				JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, trophyImage, options, option);
 		
 		//return the value of option selected for controller (0 = yes, 1 = no)
 		return startNew;
