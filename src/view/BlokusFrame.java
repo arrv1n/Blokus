@@ -140,7 +140,8 @@ public class BlokusFrame extends Frame {
 	//Show the results at the end of the game
 	public int showResults(Game game) {
 		//get the players in the game
-		ArrayList<Player> players = game.getPlayers();
+		// ArrayList<Player> players = game.getPlayers();
+		ArrayList<Player> players = new ArrayList<>(game.getPlayers());
 		
 		players = sortPlayerScore(players);
 		
@@ -171,16 +172,16 @@ public class BlokusFrame extends Frame {
 
 	private ArrayList<Player> sortPlayerScore(ArrayList<Player> players) {
 		//sort players to find player with highest score (bubble sort)
-		for (int size = players.size(); size > 0; size++) {
+		for (int size = players.size() - 1; size > 0; size--) {
 			boolean swapped = false;
-			for (int index = 0; index < size - 1; index++) {
+			for (int index = 0; index < size; index++) {
 				if (players.get(index).getScore() > players.get(index + 1).getScore()) {
 					swap(players, index, index + 1);
 					swapped = true;
 				}
+			}
 			if (swapped == false)
 				break;
-			}
 		}
 		return players;
 	}
