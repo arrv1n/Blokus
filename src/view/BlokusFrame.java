@@ -18,6 +18,8 @@ import model.Player;
 //It will be used to play blokus. It will feature the board, a panel to hold
 //all the player's pieces, and a score board
 
+//Exception in thread "AWT-EventQueue-0" java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 5
+
 public class BlokusFrame extends Frame {
 
 	//instance variables
