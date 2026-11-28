@@ -1,3 +1,11 @@
+/*
+Name: Sean Lee
+Title: Blockus - SaveGame class
+
+Description:
+The SaveGame class saves the current game to a text file called "blockusSave".
+It also holds the method to load back a new game. 
+*/
 package controller;
 
 import java.util.ArrayList;
@@ -11,6 +19,7 @@ import java.io.FileNotFoundException;
 
 public class SaveGame {
 
+	//the Save game method that saves a game
 	public static void saveGame(Game game) {
 		try (Formatter output = new Formatter("blokusSave")) {
 
@@ -55,14 +64,15 @@ public class SaveGame {
 
 			}
 
-
+		//catch if it can't find the file
 		} catch (FileNotFoundException e) {
 			System.out.println("Error Saving Game");
 		}
 	}
 
+	//the load game method that loads back a previous game.
 	public static Game loadGame() {
-
+		
 		try (Scanner input = new Scanner(new File("blokusSave"))) {
 
 			int currentPlayer = input.nextInt();
@@ -84,7 +94,7 @@ public class SaveGame {
 			// load players
 			int playerCount = input.nextInt();
 			ArrayList<Player> players = new ArrayList<Player>();
-
+			
 			for (int p = 0; p < playerCount; p++) {
 				input.nextLine();
 				String name = input.nextLine();
@@ -108,6 +118,7 @@ public class SaveGame {
 				player.setRotationflipLeft(rotationsLeft);
 				player.setFirstMove(firstMove);
 
+				//load the peices into each player
 				int peiceCount = input.nextInt();
 
 				for (int l = 0; l < peiceCount; l++) {
@@ -142,7 +153,7 @@ public class SaveGame {
 
 
 	
-
+	//restores the game and starts it again.
 	private static void restoreGame(Game game, int currentPlayer, PlayerColour[][] saved) {
 		
 		for (int i = 0; i < currentPlayer; i++)
