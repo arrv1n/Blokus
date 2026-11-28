@@ -9,7 +9,7 @@ import controller.BlokusController;
  * 		Sean: 
  			- Block (100%) All the methods
 			- Board (100%) All the methods
-			- Game ()
+			- Game (60%) getBoard, getPlayers, getCurrentPlayer, nextPlayer,  isGameOver, endGame
 			- Piece (100%) All the methods
 			- Save Game (100%) All the methods
  * 		Troy:
