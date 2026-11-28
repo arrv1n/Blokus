@@ -42,12 +42,14 @@ public abstract class Frame extends JFrame{
 		
 	}
 
+	//Create the gui objects that will go on the frame
 	private void createGUIObjects(ActionListener listener) {
 		createMenuBar(listener);
 		createButtons(listener);
 		
 	}
 
+	//Create the menu bar and the items that go on it
 	private void createMenuBar(ActionListener listener) {
 		//set bounds of menu bar
 		menuBar.setBounds(0, 0, 1134, 25);
@@ -71,6 +73,7 @@ public abstract class Frame extends JFrame{
 		
 	}
 
+	//Create the buttons
 	private void createButtons(ActionListener listener) {
 		soundButton.setBackground(Color.decode("#f7e599"));
 		soundButton.setBounds(1134, 0, 50, 50);
@@ -78,7 +81,8 @@ public abstract class Frame extends JFrame{
 		add(soundButton);
 		
 	}
-	
+
+	//Set up the frame
 	private void setUpFrame() {
 		setSize(1200, 600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -109,7 +113,8 @@ public abstract class Frame extends JFrame{
 		}
 		
 	}
-	
+
+	//Change the icon shown on the sound button depending on whether sound is playing or not
 	public void updateSoundIcon(boolean soundOn) {
 
 	    if (soundOn) {
@@ -122,7 +127,8 @@ public abstract class Frame extends JFrame{
 	        
 	    }
 	}
-	
+
+	//Getters and setters
 	public JMenuBar getJMenuBar() {
 		return menuBar;
 	}
