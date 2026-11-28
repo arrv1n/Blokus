@@ -18,8 +18,6 @@ import model.Player;
 //It will be used to play blokus. It will feature the board, a panel to hold
 //all the player's pieces, and a score board
 
-//Exception in thread "AWT-EventQueue-0" java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 5
-
 public class BlokusFrame extends Frame {
 
 	//instance variables
@@ -44,7 +42,8 @@ public class BlokusFrame extends Frame {
 		setUpBlokusFrame();
 		
 	}
-	
+
+	//Set up the objects that go on the frame
 	private void setUpBlokusFrame() {
 		setUpPanels();
 		setUpLabels();
@@ -55,6 +54,7 @@ public class BlokusFrame extends Frame {
 		
 	}
 
+	//Set up the different panels for the game
 	private void setUpPanels() {
 		//create blokus, piece, and score panel
 		boardPanel = new BoardPanel();
@@ -75,6 +75,7 @@ public class BlokusFrame extends Frame {
 		
 	}
 
+	//Set up the labels
 	private void setUpLabels() {
 		//create labels for number of rotations/flips and the player turn
 		numRotAndFlipLabel.setText("Number of Rotation/Flip Left: 10");
@@ -117,23 +118,28 @@ public class BlokusFrame extends Frame {
 		add(cursorPanel);
 		
 	}
-	
+
+	//update the visuals of the game board
 	public void updateBoard(Game game) {
 		boardPanel.update(game);
 	}
-	
+
+	//update the visuals of the piece panel
 	public void updatePieces(Game game) {
 		piecePanel.update(game);
 	}
-	
+
+	//update the visuals of the score panel
 	public void updatePlayer(Game game) {
 		playerPanel.update(game);
 	}	
-	
+
+	//update the player turn label
 	public void updateTurn(Player player) {
 	    playerTurnLabel.setText(player.getName() + "'s Turn!");
 	}
-	
+
+	//update the transformations label
 	public void updateTransformations(int amount) {
 	    numRotAndFlipLabel.setText("Number of Rotation/Flip Left: " + amount);
 	    
@@ -178,6 +184,7 @@ public class BlokusFrame extends Frame {
 		
 	}
 
+	//sort the palyers by score
 	private ArrayList<Player> sortPlayerScore(ArrayList<Player> players) {
 		//sort players to find player with highest score (bubble sort)
 		for (int size = players.size() - 1; size > 0; size--) {
@@ -201,7 +208,8 @@ public class BlokusFrame extends Frame {
 		players.set(index2, temp);
 		
 	}
-	
+
+	//Create a string that shows the points of the players in descending order
 	private String createLeaderBoard(ArrayList<Player> players) {
 		
 		//create leaderboard
@@ -215,7 +223,7 @@ public class BlokusFrame extends Frame {
 		
 		return leaderBoard;
 	}
-
+	
 	//Change the piece following the cursor
 	public void updateCursorImage(Piece piece) {
 		//Clear any blocks on the cursor panel
@@ -226,17 +234,46 @@ public class BlokusFrame extends Frame {
 		
 		}
 		
+		Piece tempPiece = piece; //This piece is created so we don't edit the original piece
+		
 		//find the colour of the piece
 		String colour = piece.getColor().toLowerCase();	
 		
+		//Check that the block has indices that in bounds for the cursor block array
+		tempPiece = checkBlockIndex(tempPiece);
+		
 		//Change the colour of the tiles based on the piece
-		for (Block block: piece.getBlocks()) {
+		for (Block block: tempPiece.getBlocks()) {
 			cursorBlocks[block.getCol()][block.getRow()].setIcon(
-					new ImageIcon("images/" + colour + "Tile.png"));	
+					new ImageIcon("images/" + colour + "Tile.png"));
+			
 		}
 		
 	}
 	
+	//Check that the block has indices that in bounds for the cursor block array
+	private Piece checkBlockIndex(Piece tempPiece) {
+		//Check that the block has indices that in bounds for the cursor block array
+		for (Block block: tempPiece.getBlocks()) {
+			//If the index is out of bounds, move all the blocks in until the current block is in bounds
+			while(block.getCol() < 0 || block.getCol() > cursorBlocks.length) {
+				//repeat for all blocks
+				for (int index = 0; index < tempPiece.getBlocks().size(); index++) {
+					//move the block 1 to the right
+					tempPiece.getBlocks().get(index).setCol(tempPiece.getBlocks().get(index).getCol() + 1);
+				}		
+			}
+			
+			//Check that the row is in bounds
+			while(block.getRow() < 0 || block.getRow() > cursorBlocks.length) {
+				for (int index = 0; index < tempPiece.getBlocks().size(); index++) {
+					tempPiece.getBlocks().get(index).setRow(tempPiece.getBlocks().get(index).getRow() + 1);
+				}
+			}
+		}
+		return tempPiece;
+	}
+
 	//update the position of the piece cursor
 	public void updateCursorPosition(int x, int y) {
 		cursorPanel.setVisible(true);
