@@ -9,6 +9,10 @@ import javax.swing.*;
 
 import model.*;
 
+//This is the board panel
+//It holds labels which will represent each panel on the board
+//The colour of each panel on the board depending on what colour is occupying it
+
 public class BoardPanel extends JPanel implements Update{
 	
 	//instance variables
@@ -41,6 +45,7 @@ public class BoardPanel extends JPanel implements Update{
 		setLayout(null);
 	}
 	
+	//This sets up the labels that will represent the tiles on the board
 	private void setUpLabels() {
 		//variables for setting position of board tiles
 		int xPosition = 0;
@@ -120,7 +125,9 @@ public class BoardPanel extends JPanel implements Update{
 		}
 		
 	}
-	
+
+	//When the cursor hovers over the board with a selected piece, the piece will be shown on the board
+	//This method shows where that piece would be on the board if placed
 	public void showGhostPiece(Piece piece, int x, int y) {
 		//get the row and column values of the hovered
 		//Since blocks are 20x20 pixels, dividing the coordinates of the label
