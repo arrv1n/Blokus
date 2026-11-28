@@ -6,7 +6,12 @@ import controller.BlokusController;
  * Name: Group #4 - Arvin Yu, Sean Lee, Troy Williams
  * Contributions: 
  * 		Arvin:
- * 		Sean:
+ * 		Sean: 
+ 			- Block (100%) All the methods
+			- Board (100%) All the methods
+			- Game ()
+			- Piece (100%) All the methods
+			- Save Game (100%) All the methods
  * 		Troy:
  * 			- BlokusFrame (90%): BlokusFrame, setUp(BlokusFrame, Panels, Labels, Cursor), 
  * 				update(board, piece, player), showResults, sortPlayerScore, swap, 
