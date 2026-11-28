@@ -1,5 +1,5 @@
 /*
-Name: Sean Lee
+Name: Sean and Arvin
 Title: Blockus - Game Class
 
 Description:
